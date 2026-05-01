@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Altivora Hosting - System Maintenance</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+    font-family: 'Inter', sans-serif;
+    height:100vh;
+    background: radial-gradient(circle at center, #1a0000, #050505);
+    color:white;
+    overflow:hidden;
+}
+
+/* NAV */
+.nav{
+    position:absolute;
+    top:0;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    padding:20px 60px;
+}
+
+.logo{
+    font-family:'Orbitron';
+    color:#00eaff;
+    font-size:20px;
+}
+
+.nav a{
+    margin-left:20px;
+    color:#aaa;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.deploy{
+    background:#0af;
+    padding:8px 16px;
+    border-radius:20px;
+    color:black;
+}
+
+/* CENTER */
+.container{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+/* BIG STATUS */
+.code{
+    font-size:120px;
+    font-family:'Orbitron';
+    color:#ff2d2d;
+    text-shadow:0 0 40px rgba(255,0,0,0.8);
+}
+
+.status{
+    font-size:28px;
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+.desc{
+    font-size:14px;
+    opacity:.7;
+    max-width:500px;
+    margin-bottom:30px;
+}
+
+/* TERMINAL */
+.terminal{
+    width:520px;
+    max-width:90%;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,0,0,0.2);
+    backdrop-filter:blur(15px);
+    border-radius:12px;
+    padding:20px;
+    text-align:left;
+    font-family:monospace;
+    font-size:13px;
+    margin-bottom:30px;
+    box-shadow:0 0 30px rgba(255,0,0,0.2);
+}
+
+/* BUTTONS */
+.actions{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.btn{
+    padding:12px 22px;
+    border-radius:30px;
+    text-decoration:none;
+    font-size:14px;
+    transition:.3s;
+}
+
+.primary{
+    background:linear-gradient(90deg,#00eaff,#00ffa6);
+    color:black;
+    box-shadow:0 0 20px rgba(0,255,255,0.5);
+}
+
+.secondary{
+    border:1px solid rgba(255,255,255,0.2);
+    color:white;
+}
+
+.btn:hover{
+    transform:scale(1.05);
+}
+
+/* PARTICLES */
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    background:#00eaff;
+    border-radius:50%;
+    opacity:.6;
+    animation:float linear infinite;
+}
+
+@keyframes float{
+    from{transform:translateY(100vh)}
+    to{transform:translateY(-10vh)}
+}
+
+/* GLOW CENTER */
+.glow{
+    position:absolute;
+    width:400px;
+    height:400px;
+    background:radial-gradient(circle, rgba(255,0,0,0.2), transparent);
+    filter:blur(80px);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="glow"></div>
+
+<div class="nav">
+    <div class="logo">ALTIVORA HOSTING</div>
+    <div>
+        <a href="#">Products</a>
+        <a href="#">Company</a>
+        <a href="https://billing.altivorahosting.com/" class="deploy">Client Area</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="code">503</div>
+
+    <div class="status">SYSTEM_MAINTENANCE</div>
+
+    <div class="desc">
+        Core infrastructure is currently upgrading. Some services may be temporarily unavailable.
+    </div>
+
+    <div class="terminal" id="terminal"></div>
+
+    <div class="actions">
+        <a href="https://billing.altivorahosting.com/" class="btn primary">View Services</a>
+        <a href="https://billing.altivorahosting.com/clientarea.php" class="btn secondary">Client Login</a>
+        <a href="https://billing.altivorahosting.com/cart.php" class="btn secondary">Renew Server</a>
+    </div>
+
+</div>
+
+<script>
+const lines = [
+"root@altivora:~# initializing nodes...",
+"[OK] connecting to core network",
+"[WARN] maintenance mode active",
+"[INFO] migrating workloads...",
+"[OK] security patches applied",
+"[INFO] restarting clusters...",
+"[OK] system stable"
+];
+
+let t = document.getElementById("terminal");
+let i=0,j=0;
+
+function type(){
+    if(i<lines.length){
+        if(j<lines[i].length){
+            t.innerHTML += lines[i][j];
+            j++;
+            setTimeout(type,20);
+        }else{
+            t.innerHTML += "<br>";
+            i++; j=0;
+            setTimeout(type,300);
+        }
+    }else{
+        t.innerHTML += "<br>> Awaiting connections...";
+    }
+}
+type();
+
+/* particles */
+for(let i=0;i<60;i++){
+    let p=document.createElement("div");
+    p.className="particle";
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=(5+Math.random()*10)+"s";
+    document.body.appendChild(p);
+}
+</script>
+
+</body>
+</html>
